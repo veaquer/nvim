@@ -11,6 +11,50 @@ return {
       },
     },
   },
+
+  -- {
+  --   url = "https://gitlab.com/gitlab-org/editor-extensions/gitlab.vim.git",
+  --   event = { "BufReadPre", "BufNewFile" },
+  --   ft = { "go", "golang", "gopls", "javascript", "typescript", "python", "ruby", "lua", "tsx", "jsx" },
+  --   cond = function()
+  --     return os.getenv "GITLAB_TOKEN" and os.getenv "GITLAB_TOKEN" ~= ""
+  --   end,
+  --   opts = {
+  --     statusline = { enabled = false },
+  --     code_suggestions = {
+  --       auto_filetypes = { "javascript", "typescript", "typescriptreact", "tsx", "lua", "go", "gopls", "golang", "md" },
+  --       ghost_text = {
+  --         enabled = true,
+  --         toggle_enabled = "<C-g>",
+  --         accept_suggestion = "<C-l>",
+  --         clear_suggestions = "<C-k>",
+  --         stream = false,
+  --       },
+  --     },
+  --   },
+  -- },
+
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = true,
+    cmd = {
+      "LazyGit",
+      "LazyGitConfig",
+      "LazyGitCurrentFile",
+      "LazyGitFilter",
+      "LazyGitFilterCurrentFile",
+    },
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+    -- setting the keybinding for LazyGit with 'keys' is recommended in
+    -- order to load the plugin when the command is run for the first time
+    keys = {
+      { "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+    },
+  },
+
   { import = "nvchad.blink.lazyspec" },
   {
     "nvimtools/none-ls.nvim",
@@ -21,7 +65,7 @@ return {
   },
   {
     "stevearc/conform.nvim",
-    -- event = 'BufWritePre', -- uncomment for format on save
+    event = "BufWritePre", -- uncomment for format on save
     opts = require "configs.conform",
   },
 
@@ -69,7 +113,7 @@ return {
       },
 
       -- (Default) Only show the documentation popup when manually triggered
-      completion = { documentation = { auto_show = false } },
+      completion = { documentation = { auto_show = true } },
 
       -- Default list of enabled providers defined so that you can extend it
       -- elsewhere in your config, without redefining it, due to `opts_extend`

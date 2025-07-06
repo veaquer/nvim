@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "html", "cssls", "gopls", "ts_ls", "eslint", "tailwindcss", "emmet_ls", "clangd", "cmake" }
+local servers = { "html", "cssls", "gopls", "ts_ls", "tailwindcss", "emmet_ls", "clangd", "cmake" }
 vim.lsp.enable(servers)
 
 local lspconfig = require "lspconfig"
@@ -32,7 +32,7 @@ for _, lsp in ipairs(servers) do
   lspconfig[lsp].setup {
     on_attach = ooo,
     on_init = nvlsp.on_init,
-    capabilities = caps, 
+    capabilities = caps,
   }
 end
 
@@ -54,4 +54,71 @@ lspconfig.gopls.setup {
   },
 }
 
--- read :h vim.lsp.config for changing options of lsp servers
+lspconfig.html.setup {
+  on_attach = ooo,
+  capabilities = caps,
+  filetypes = { "html", "vue" },
+}
+
+lspconfig.tailwindcss.setup {
+  filetypes = { "html", "javascriptreact", "typescriptreact", "vue" },
+}
+
+lspconfig.emmet_ls.setup {
+  on_attach = ooo,
+  capabilities = caps,
+  filetypes = { "javascriptreact", "typescriptreact", "vue" },
+}
+
+local vue_language_server = "/usr/lib/node_modules/@vue/language-server"
+local vue_tsplugin = vue_language_server .. "/node_modules/@vue/typescript-plugin"
+
+-- lspconfig.ts_ls.setup {
+--   on_attach = ooo,
+--   capabilities = caps,
+--   init_options = {
+--     plugins = { -- I think this was my breakthrough that made it work
+--       {
+--         name = "@vue/typescript-plugin",
+--         location = vue_tsplugin,
+--         languages = { "vue" },
+--       },
+--     },
+--   },
+--   filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+-- }
+
+lspconfig.ts_ls.setup {
+  on_attach = ooo,
+  capabilities = caps,
+  init_options = {
+    plugins = {
+      {
+        name = "@vue/typescript-plugin",
+        location = vue_tsplugin,
+        languages = { "vue" },
+      },
+    },
+  },
+  filetypes = {
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+  },
+  cmd = { "typescript-language-server", "--stdio" },
+}
+
+--
+-- lspconfig.volar.setup {
+--   on_attach = ooo,
+--   capabilities = caps,
+--   init_options = {
+--     vue = {
+--       hybridMode = false,
+--     },
+--   },
+--   filetypes = { "vue", "typescript", "javascript", "javascriptreact", "typescriptreact" },
+-- }
+-- -- read :h vim.lsp.config for changing options of lsp servers
