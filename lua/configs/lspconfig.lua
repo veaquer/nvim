@@ -1,6 +1,6 @@
 require("nvchad.configs.lspconfig").defaults()
 
-local servers = { "html", "cssls", "gopls", "ts_ls", "tailwindcss", "emmet_ls", "clangd", "cmake" }
+local servers = { "html", "cssls", "gopls", "ts_ls", "tailwindcss", "clangd", "cmake" }
 vim.lsp.enable(servers)
 
 local lspconfig = require "lspconfig"
@@ -64,11 +64,11 @@ lspconfig.tailwindcss.setup {
   filetypes = { "html", "javascriptreact", "typescriptreact", "vue" },
 }
 
-lspconfig.emmet_ls.setup {
-  on_attach = ooo,
-  capabilities = caps,
-  filetypes = { "javascriptreact", "typescriptreact", "vue" },
-}
+-- lspconfig.emmet_ls.setup {
+--   on_attach = ooo,
+--   capabilities = caps,
+--   filetypes = { "javascriptreact", "typescriptreact", "vue" },
+-- }
 
 local vue_language_server = "/usr/lib/node_modules/@vue/language-server"
 local vue_tsplugin = vue_language_server .. "/node_modules/@vue/typescript-plugin"
